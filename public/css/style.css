@@ -2,7 +2,7 @@
 
 :root {
     --font-family: 'Open Sans', sans-serif;
-    --primary: #487eb0;
+    --primary: #8e44ad;
     --dark: #353b48;
     --danger: #e74c3c;
     --background-light: #ecf0f1;
@@ -106,51 +106,6 @@ header {
     flex-flow: row;
     justify-content: center;
     align-items: center;
-}
-
-.todo-container {
-    padding: 1.5rem;
-    background-color: white;
-    border: var(--border);
-    border-radius: 3px;
-    min-width: 60rem;
-    min-height: 40rem;
-    box-shadow: var(--box-shadow);
-}
-
-.todo-form {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-}
-
-.todo-form input {
-    flex: 1;
-    margin-right: 0.5rem;
-    border: var(--border);
-    border-radius: 3px;
-    padding: 1rem 1.5rem;
-}
-
-.todo-item {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    margin-bottom: .5rem;
-    padding: .5rem 1.5rem;
-}
-
-.todo-item:nth-child(odd) {
-    background-color: var(--background-light);
-}
-
-.todo-name {
-    flex: 1;
-    margin-right: 5px;
-}
-
-.todo-container h1 {
-    text-align: center;
 }
 
 /* footer */
