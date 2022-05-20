@@ -44,6 +44,18 @@ a {
     text-decoration: none;
 }
 
+/* utiles */
+
+.p-20 {
+    padding: 20px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+
+/* boutons */
 .btn {
     background-color: white;
     font-weight: 700;
@@ -130,11 +142,21 @@ header {
 
 /* content */
 .content {
+    max-width: 100rem;
+    width: 100%;
     flex: 1;
+    align-self: center;
     display: flex;
-    flex-flow: row;
-    justify-content: center;
+    flex-flow: column;
+    padding: 2rem 0;
     align-items: center;
+}
+
+.block {
+    border-radius: 3px;
+    border: var(--border);
+    background-color: white;
+    box-shadow: var(--box-shadow);
 }
 
 /* footer */
