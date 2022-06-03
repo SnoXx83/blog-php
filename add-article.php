@@ -4,7 +4,7 @@ const ERROR_TITLE_TOO_SHORT = 'le titre est trop court';
 const ERROR_CONTENT_TOO_SHORT = "L'article est trop court";
 const ERROR_IMAGE_URL = "L'image doit etre une url valide";
 
-$filename = __DIR__ . '/data/articles.json';
+$filename = __DIR__.'/data/articles.json';
 $articles = [];
 
 $errors = [
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="content">
             <div class="block p-20 form-container">
                 <h1>Ecrire un article</h1>
-                <form action="/add-article.php" method="POST">
+                <form action="./add-article.php" method="POST">
                     <div class="form-control">
                         <label for="title">Titre</label>
                         <input type="text" name="title" id="title">
@@ -109,8 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-control">
                         <label for="content">Contenu</label>
                         <textarea type="text" name="content" id="content"></textarea>
-                        <?php if ($errors['category']) : ?>
-                            <p class="text-danger"><?= $errors['category'] ?></p>
+                        <?php if ($errors['content']) : ?>
+                            <p class="text-danger"><?= $errors['content'] ?></p>
                         <?php endif; ?>
                     </div>
                     <div class="form-control">
