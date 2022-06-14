@@ -7,7 +7,7 @@
 $articleDAO = require_once './database/models/ArticleDAO.php';
 
 
-$pdo = require_once './database.php';
+
 $statement = $pdo->prepare('DELETE FROM article WHERE id=:id');
 
 
