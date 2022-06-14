@@ -1,42 +1,39 @@
 <?php
 
-$pdo= require_once './database.php';
-$statement= $pdo->prepare('SELECT * FROM article');
-$statement->execute();
-$articles= $statement->fetchAll();
+/**
+ * @var ArticleDAO
+ */
+$articleDAO = require_once './database/models/ArticleDAO.php';
+$articles = $articleDAO->getAll();
 
-// $filename= __DIR__.'/data/articles.json';
-// $articles= [];
-$categories=[];
-$selectedCat= '';
-
+$categories = [];
+$selectedCat = '';
 
 
-$_GET= filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$selectedCat= $_GET['cat']?? '';
+$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$selectedCat = $_GET['cat'] ?? '';
 
-if(count($articles)){
-    // $articles= json_decode(file_get_contents($filename), true) ?? [];
-    $catmap= array_map(fn($a)=> $a['category'], $articles);
+if (count($articles)) {
+
+    $catmap = array_map(fn ($a) => $a['category'], $articles);
     // je creer un tableau associatif qui a pour cles les categories et pour valeurs le nombre d'articles
-    $categories= array_reduce($catmap, function($acc, $cat){
-        if(isset($acc[$cat])){
+    $categories = array_reduce($catmap, function ($acc, $cat) {
+        if (isset($acc[$cat])) {
             $acc[$cat]++;
-        }else{
-            $acc[$cat]=1;
+        } else {
+            $acc[$cat] = 1;
         }
         return $acc;
-    },[]);
+    }, []);
     // je creer un tableau associatif qui a pour cles les categories et pour valeurs tout les articles concernant la categorie
-    $articlesPerCategories= array_reduce($articles, function($acc, $article){
-        if(isset($acc[$article['category']])){
-            $acc[$article['category']]= [...$acc[$article['category']], $article];
-        }else{
-            $acc[$article['category']]=  [$article];
-
+    $articlesPerCategories = array_reduce($articles, function ($acc, $article) {
+        if (isset($acc[$article['category']])) {
+            $acc[$article['category']] = [...$acc[$article['category']], $article];
+        } else {
+            $acc[$article['category']] =  [$article];
         }
         return $acc;
-    },[]);
+    }, []);
 }
 
 
@@ -58,10 +55,10 @@ if(count($articles)){
         <div class="content">
             <div class="newsfeed-container">
                 <ul class="category-container">
-                    <li class="<?= $selectedCat ?'' : 'cat-active' ?>"> <a href="/">
+                    <li class="<?= $selectedCat ? '' : 'cat-active' ?>"> <a href="/">
                             Tous les articles <span class="small">(<?= count($articles) ?>)</span>
                         </a> </li>
-                    <?php foreach($categories as $catName=> $catNum) : ?>
+                    <?php foreach ($categories as $catName => $catNum) : ?>
                     <li class="<?= $selectedCat === $catName ? 'cat-active' : '' ?>"><a href="/?cat=<?= $catName ?>">
                             <?= $catName ?><span class="small">(<?= $catNum ?>)</span>
                         </a></li>
@@ -69,17 +66,17 @@ if(count($articles)){
                 </ul>
 
                 <div class="feed-container">
-                    <?php if(!$selectedCat) : ?>
-                    <?php foreach($categories as $cat=>$num) : ?>
+                    <?php if (!$selectedCat) : ?>
+                    <?php foreach ($categories as $cat => $num) : ?>
                     <h2 class="p-10"><?= $cat ?></h2>
                     <div class="articles-container">
-                        <?php foreach($articlesPerCategories[$cat] as $article) : ?>
+                        <?php foreach ($articlesPerCategories[$cat] as $article) : ?>
                         <a href="/show-article.php?id=<?= $article['id'] ?>" class="article block">
                             <div class="overflow">
                                 <div class="img-container" style='background-image: url(<?= $article['image'] ?>);'>
                                 </div>
                             </div>
-                            <h3><?= $article['title']?></h3>
+                            <h3><?= $article['title'] ?></h3>
                         </a>
                         <?php endforeach; ?>
                     </div>
@@ -87,13 +84,13 @@ if(count($articles)){
                     <?php else : ?>
                     <h2><?= $selectedCat ?></h2>
                     <div class="articles-container">
-                        <?php foreach($articlesPerCategories[$selectedCat] as $article) : ?>
+                        <?php foreach ($articlesPerCategories[$selectedCat] as $article) : ?>
                         <a href="/show-article.php?id=<?= $article['id'] ?>" class="article block">
                             <div class="overflow">
                                 <div class="img-container" style='background-image: url(<?= $article['image'] ?>);'>
                                 </div>
                             </div>
-                            <h3><?= $article['title']?></h3>
+                            <h3><?= $article['title'] ?></h3>
                         </a>
                         <?php endforeach; ?>
                     </div>

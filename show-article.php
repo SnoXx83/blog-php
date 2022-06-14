@@ -1,28 +1,19 @@
 <?php
+
 /**
- * @var PDO
+ * @var ArticleDAO
  */
 
-$pdo=require_once './database.php';
-$statement= $pdo->prepare('SELECT * FROM article WHERE id=:id');
+$articleDAO = require_once './database/models/ArticleDAO.php';
 
-// $filename= __DIR__.'/data/articles.json';
-// $articles=[];
-$_GET= filter_input_array(INPUT_GET,FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$id= $_GET['id'] ??'';
+$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$id = $_GET['id'] ?? '';
 
 
-if(!$id){
+if (!$id) {
     header('Location: /');
-}else{
-    // if(file_exists($filename)){
-    //     $articles= json_decode(file_get_contents($filename), true) ?? [];
-    //     $articleIdx= array_search($id, array_column($articles, 'id'));
-    //     $article= $articles[$articleIdx];
-    // }
-    $statement->bindValue(':id', $id);
-    $statement->execute();
-    $article= $statement->fetch();
+} else {
+    $article = $articleDAO->getOne($id);
 }
 
 ?>
@@ -32,19 +23,19 @@ if(!$id){
 <html lang="en">
 
 <head>
-    <?php require_once'includes/head.php' ?>
+    <?php require_once 'includes/head.php' ?>
     <link rel="stylesheet" href="public/css/show-article.css">
     <title>Document</title>
 </head>
 
 <body>
     <div class="container">
-        <?php require_once 'includes/header.php'?>
+        <?php require_once 'includes/header.php' ?>
         <div class="content">
             <div class="article-container">
                 <a href="/" class="article-back">
                     < Retour à la liste des articles</a>
-                        <div class="article-cover-img" style="background-image: url(<?= $article['image']?>);"></div>
+                        <div class="article-cover-img" style="background-image: url(<?= $article['image'] ?>);"></div>
                         <h1 class="article-title"><?= $article['title'] ?></h1>
                         <div class="separator"></div>
                         <p class="article-content"><?= $article['content'] ?></p>
